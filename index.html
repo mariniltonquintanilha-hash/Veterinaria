@@ -1,0 +1,1715 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VitaPet | Clínica Veterinária Especializada</title>
+    
+    <!-- Fontes (Google Fonts) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- 1. VARIÁVEIS E RESET --- */
+        :root {
+            --primary: #4a8c5e;
+            --primary-dark: #3a6f4a;
+            --primary-light: #6aaa7c;
+            --secondary: #ffb347;
+            --secondary-dark: #e69c3c;
+            --accent: #8bc34a;
+            --light: #f9f9f9;
+            --light-bg: #f0f7f2;
+            --dark: #3a3a3a;
+            --gray: #777777;
+            --gray-light: #e5e5e5;
+            --white: #ffffff;
+            --shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            --gradient: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+        }
+
+        a { text-decoration: none; color: inherit; transition: 0.3s; cursor: pointer; }
+        ul { list-style: none; }
+        img { display: block; max-width: 100%; }
+        
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .hidden { display: none !important; animation: fadeOut 0.3s forwards; }
+        .fade-in { animation: fadeIn 0.8s ease-out forwards; }
+        .text-center { text-align: center; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+
+        /* --- 2. HEADER E NAVEGAÇÃO --- */
+        header {
+            background-color: var(--white);
+            height: 90px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.03);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: 700;
+            font-family: 'Cormorant Garamond', serif;
+            letter-spacing: 1px;
+            color: var(--primary);
+        }
+        .logo span { 
+            color: var(--secondary);
+            font-style: italic;
+        }
+
+        .nav-menu { display: flex; gap: 35px; }
+
+        .nav-link {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+            color: var(--dark);
+            position: relative;
+            padding: 5px 0;
+        }
+
+        .nav-link:hover, .nav-link.active { color: var(--primary); }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--primary);
+            transition: width 0.3s;
+        }
+        
+        .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+
+        .cta-btn-nav {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 12px 28px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+            border-radius: 2px;
+            box-shadow: 0 4px 10px rgba(74, 140, 94, 0.2);
+        }
+        .cta-btn-nav:hover { 
+            background-color: var(--primary-dark); 
+            color: var(--white); 
+            transform: translateY(-2px); 
+            box-shadow: 0 6px 15px rgba(74, 140, 94, 0.3);
+        }
+
+        .mobile-toggle { display: none; font-size: 24px; cursor: pointer; color: var(--primary); }
+
+        /* --- 3. COMPONENTES GERAIS --- */
+        .section-padding { padding: 80px 0; }
+        
+        .section-title {
+            font-size: 42px;
+            color: var(--primary);
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+        
+        .section-subtitle {
+            color: var(--secondary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 35px;
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 1px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-radius: 2px;
+        }
+
+        .btn-primary { 
+            background: var(--primary); 
+            color: var(--white); 
+            box-shadow: 0 4px 15px rgba(74, 140, 94, 0.3);
+        }
+        .btn-primary:hover { 
+            background: var(--primary-dark); 
+            transform: translateY(-3px); 
+            box-shadow: 0 6px 20px rgba(74, 140, 94, 0.4);
+        }
+        
+        .btn-outline { 
+            border: 2px solid var(--primary); 
+            color: var(--primary); 
+            background: transparent; 
+        }
+        .btn-outline:hover { 
+            background: var(--primary); 
+            color: var(--white); 
+            transform: translateY(-3px);
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 5px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+            height: 100%;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        /* --- 4. HOME SECTION (6 SEÇÕES) --- */
+        /* 1. Hero Section */
+        .hero {
+            height: 90vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('https://images.unsplash.com/photo-1450778869180-41d0601e046e?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--white);
+            position: relative;
+        }
+        
+        .hero-content { 
+            max-width: 800px; 
+            padding: 20px; 
+            animation: slideUp 1s ease-out; 
+        }
+        .hero h1 { 
+            font-size: 56px; 
+            line-height: 1.1; 
+            margin-bottom: 25px; 
+            font-weight: 600; 
+        }
+        .hero h1 span { 
+            color: var(--secondary); 
+            font-style: italic;
+        }
+        .hero p { 
+            font-size: 18px; 
+            font-weight: 300; 
+            margin-bottom: 40px; 
+            opacity: 0.9; 
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* 2. Serviços Destaque */
+        .services-section { background: var(--white); }
+        .services-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 30px; 
+            margin-top: 50px; 
+        }
+        .service-card { 
+            text-align: center; 
+            padding: 40px 30px;
+            border-top: 4px solid var(--primary);
+        }
+        .service-icon { 
+            font-size: 42px; 
+            color: var(--primary); 
+            margin-bottom: 25px; 
+            display: block; 
+        }
+        .service-title { 
+            font-size: 22px; 
+            margin-bottom: 15px; 
+            color: var(--dark); 
+        }
+        .service-text { 
+            font-size: 15px; 
+            color: var(--gray); 
+            margin-bottom: 20px;
+        }
+
+        /* 3. Diferenciais */
+        .features-section { background: var(--light-bg); }
+        .features-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        .feature-item {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+        .feature-icon {
+            background: rgba(74, 140, 94, 0.1);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+        .feature-content h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        /* 4. Tecnologias */
+        .tech-section { 
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--white);
+            padding: 80px 0;
+        }
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+        .tech-card {
+            text-align: center;
+            padding: 40px 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            backdrop-filter: blur(10px);
+        }
+        .tech-name {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: var(--white);
+        }
+        .tech-desc {
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* 5. Casos de Sucesso */
+        .results-section { background: var(--white); }
+        .results-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        .result-item {
+            position: relative;
+            overflow: hidden;
+            height: 400px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .result-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .result-item:hover img {
+            transform: scale(1.05);
+        }
+        .result-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.7) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 30px;
+            color: var(--white);
+        }
+        .result-type {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--secondary);
+            margin-bottom: 10px;
+        }
+        .result-title {
+            font-size: 22px;
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        /* 6. CTA Final */
+        .final-cta {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1596273315327-8f6eb5e5e5b9?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            color: var(--white);
+            padding: 100px 0;
+            text-align: center;
+        }
+        .final-cta h2 { 
+            font-size: 42px; 
+            margin-bottom: 20px; 
+            color: var(--white);
+        }
+        .final-cta p { 
+            font-size: 18px; 
+            color: rgba(255,255,255,0.8); 
+            margin-bottom: 30px; 
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .btn-light { 
+            background: var(--white); 
+            color: var(--primary); 
+            border: 2px solid var(--white);
+        }
+        .btn-light:hover { 
+            background: transparent; 
+            color: var(--white); 
+            transform: translateY(-3px);
+        }
+
+        /* --- 5. DEMAIS PÁGINAS --- */
+        /* Página de Serviços Detalhados */
+        .services-detail-section { background: var(--light-bg); }
+        .service-category { margin-bottom: 60px; }
+        .cat-title { 
+            font-size: 28px; 
+            border-bottom: 2px solid var(--primary); 
+            padding-bottom: 10px; 
+            margin-bottom: 30px; 
+            color: var(--primary); 
+        }
+        .service-detail-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        .service-detail-card {
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+        }
+        .service-price {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--gray-light);
+        }
+        .price-note {
+            font-size: 14px;
+            color: var(--gray);
+            font-style: italic;
+            margin-top: 5px;
+        }
+
+        /* Página Sobre */
+        .about-hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1513360371669-4adf3dd7dff8?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 120px 0;
+            text-align: center;
+        }
+        .team-section { background: var(--white); }
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+        .team-card { text-align: center; }
+        .team-img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 20px;
+            border: 5px solid var(--light);
+            box-shadow: var(--shadow);
+        }
+        .team-name { 
+            font-size: 22px; 
+            margin-bottom: 5px; 
+            color: var(--primary); 
+        }
+        .team-role { 
+            color: var(--secondary); 
+            font-weight: 600; 
+            margin-bottom: 15px; 
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 14px;
+        }
+
+        /* Página Depoimentos */
+        .testimonials-section { background: var(--light-bg); }
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        .testimonial-card { 
+            padding: 40px; 
+            border-left: 4px solid var(--primary); 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.03); 
+            background: var(--white);
+        }
+        .stars { 
+            color: var(--secondary); 
+            margin-bottom: 15px; 
+            font-size: 18px;
+        }
+        .testimonial-text { 
+            font-family: 'Cormorant Garamond'; 
+            font-size: 20px; 
+            font-style: italic; 
+            margin-bottom: 20px; 
+            color: #555; 
+        }
+        .client-profile { 
+            display: flex; 
+            align-items: center; 
+            gap: 15px; 
+        }
+        .client-img { 
+            width: 50px; 
+            height: 50px; 
+            border-radius: 50%; 
+            object-fit: cover; 
+            background: #ddd; 
+        }
+
+        /* Página Agendamento */
+        .booking-section { background: var(--white); }
+        .booking-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+        .booking-form-wrapper {
+            background: var(--light-bg);
+            padding: 40px;
+            border-radius: 5px;
+        }
+        .calendar-widget {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+        }
+        .calendar-day {
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        .calendar-day:hover {
+            background: rgba(74, 140, 94, 0.1);
+        }
+        .calendar-day.selected {
+            background: var(--primary);
+            color: var(--white);
+            font-weight: 600;
+        }
+        .time-slots {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .time-slot {
+            padding: 10px;
+            background: var(--light-bg);
+            text-align: center;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .time-slot:hover, .time-slot.selected {
+            background: var(--primary);
+            color: var(--white);
+            font-weight: 600;
+        }
+
+        /* Página Contato */
+        .contact-layout { 
+            display: flex; 
+            gap: 60px; 
+            flex-wrap: wrap; 
+        }
+        .contact-info, .contact-form-wrapper { 
+            flex: 1; 
+            min-width: 300px; 
+        }
+        .info-box { 
+            margin-bottom: 30px; 
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+        }
+        .info-icon {
+            background: rgba(74, 140, 94, 0.1);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+        .info-label { 
+            font-size: 13px; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+            font-weight: 600; 
+            color: var(--gray); 
+            margin-bottom: 5px; 
+}
+        .info-content { 
+            font-size: 16px; 
+            color: #444; 
+        }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { 
+            display: block; 
+            font-size: 14px; 
+            font-weight: 600; 
+            color: var(--primary); 
+            margin-bottom: 8px; 
+        }
+        .form-control { 
+            width: 100%; 
+            padding: 14px 15px; 
+            border: 1px solid var(--gray-light); 
+            background: var(--white); 
+            font-family: 'Montserrat'; 
+            border-radius: 4px;
+            transition: 0.3s; 
+        }
+        .form-control:focus { 
+            outline: none; 
+            border-color: var(--primary); 
+            box-shadow: 0 0 0 3px rgba(74, 140, 94, 0.1); 
+        }
+
+        /* Footer */
+        footer { 
+            background: var(--primary-dark); 
+            color: var(--white); 
+            padding: 70px 0 20px; 
+        }
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        .footer-logo { 
+            font-size: 28px; 
+            font-weight: 700; 
+            margin-bottom: 20px; 
+            color: var(--white); 
+        }
+        .footer-logo span { 
+            color: var(--secondary); 
+            font-style: italic;
+        }
+        .footer-about { 
+            color: rgba(255,255,255,0.7); 
+            margin-bottom: 20px; 
+        }
+        .footer-title { 
+            font-size: 18px; 
+            margin-bottom: 20px; 
+            color: var(--white); 
+        }
+        .footer-nav a { 
+            display: block; 
+            margin-bottom: 10px; 
+            color: rgba(255,255,255,0.7); 
+        }
+        .footer-nav a:hover { color: var(--secondary); }
+        .social-links { display: flex; gap: 15px; margin-top: 20px; }
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: all 0.3s;
+        }
+        .social-link:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+            color: var(--primary-dark);
+        }
+        .copyright { 
+            text-align: center; 
+            padding-top: 20px; 
+            border-top: 1px solid rgba(255,255,255,0.1); 
+            color: rgba(255,255,255,0.6); 
+            font-size: 14px; 
+        }
+
+        /* --- RESPONSIVIDADE --- */
+        @media (max-width: 992px) {
+            .section-title { font-size: 36px; }
+            .hero h1 { font-size: 46px; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu { display: none; }
+            .mobile-toggle { display: block; }
+            .hero h1 { font-size: 38px; }
+            .hero p { font-size: 16px; }
+            .section-title { font-size: 32px; }
+            
+            .navbar.mobile-active .nav-menu {
+                display: flex; 
+                flex-direction: column; 
+                position: absolute;
+                top: 90px; 
+                left: 0; 
+                width: 100%; 
+                background: var(--white);
+                padding: 30px; 
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+                z-index: 1000;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero { height: 80vh; }
+            .section-padding { padding: 60px 0; }
+            .btn { padding: 12px 30px; }
+            .contact-layout { flex-direction: column; }
+            .calendar-grid { grid-template-columns: repeat(7, 1fr); }
+            .time-slots { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVEGAÇÃO -->
+    <header>
+        <div class="container navbar" id="navbar">
+            <div class="logo">VITA<span>PET</span></div>
+            <div class="mobile-toggle" onclick="toggleMobileMenu()">☰</div>
+            <ul class="nav-menu">
+                <li><a class="nav-link active" onclick="showPage('home')">Home</a></li>
+                <li><a class="nav-link" onclick="showPage('services')">Serviços</a></li>
+                <li><a class="nav-link" onclick="showPage('about')">Sobre</a></li>
+                <li><a class="nav-link" onclick="showPage('testimonials')">Depoimentos</a></li>
+                <li><a class="nav-link" onclick="showPage('booking')">Agendar</a></li>
+                <li><a class="cta-btn-nav" onclick="showPage('contact')">Contato</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- PÁGINAS (SEÇÕES) -->
+    
+    <!-- 1. HOME -->
+    <div id="home" class="page-section fade-in">
+        <!-- 1. Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <span class="section-subtitle" style="color: var(--secondary); margin-bottom: 20px;">Clínica Veterinária Especializada</span>
+                <h1>Cuidando do seu <span>Melhor Amigo</span> com <span>Amor</span></h1>
+                <p>Na VitaPet, oferecemos cuidados veterinários completos, desde consultas de rotina até tratamentos especializados, com tecnologia de ponta e muito carinho.</p>
+                <div>
+                    <button class="btn btn-primary" onclick="showPage('booking')">Agendar Consulta</button>
+                    <button class="btn btn-outline" style="border-color: white; color: white;" onclick="showPage('services')">Ver Serviços</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Serviços Destaque -->
+        <section class="section-padding services-section">
+            <div class="container">
+                <div class="text-center">
+                    <span class="section-subtitle">Cuidados Especiais</span>
+                    <h2 class="section-title">Serviços em Destaque</h2>
+                    <p style="margin-bottom: 50px; color: var(--gray); max-width: 700px; margin-left: auto; margin-right: auto;">Oferecemos uma ampla gama de serviços para garantir a saúde e bem-estar do seu pet.</p>
+                </div>
+                <div class="services-grid">
+                    <div class="card service-card">
+                        <span class="service-icon"><i class="fas fa-stethoscope"></i></span>
+                        <h3 class="service-title">Consultas Veterinárias</h3>
+                        <p class="service-text">Atendimento clínico completo para diagnóstico, prevenção e tratamento de doenças em cães e gatos.</p>
+                        <a href="#" style="color: var(--primary); font-weight: 600;" onclick="showPage('services')">Saiba mais →</a>
+                    </div>
+                    <div class="card service-card">
+                        <span class="service-icon"><i class="fas fa-syringe"></i></span>
+                        <h3 class="service-title">Vacinação</h3>
+                        <p class="service-text">Programa completo de vacinação para proteger seu pet contra as principais doenças infecciosas.</p>
+                        <a href="#" style="color: var(--primary); font-weight: 600;" onclick="showPage('services')">Saiba mais →</a>
+                    </div>
+                    <div class="card service-card">
+                        <span class="service-icon"><i class="fas fa-bone"></i></span>
+                        <h3 class="service-title">Cirurgias</h3>
+                        <p class="service-text">Procedimentos cirúrgicos realizados em ambiente esterilizado com monitoramento anestésico avançado.</p>
+                        <a href="#" style="color: var(--primary); font-weight: 600;" onclick="showPage('services')">Saiba mais →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Diferenciais -->
+        <section class="section-padding features-section">
+            <div class="container">
+                <div class="text-center">
+                    <span class="section-subtitle">Por que nos escolher</span>
+                    <h2 class="section-title">Nossos Diferenciais</h2>
+                    <p style="margin-bottom: 50px; color: var(--gray); max-width: 700px; margin-left: auto; margin-right: auto;">Compromisso com a saúde, bem-estar e felicidade do seu pet.</p>
+                </div>
+                <div class="features-container">
+                    <div class="feature-item">
+                        <div class="feature-icon"><i class="fas fa-user-md"></i></div>
+                        <div class="feature-content">
+                            <h3>Equipe Veterinária Especializada</h3>
+                            <p style="color: var(--gray);">Veterinários com especialização em diversas áreas, com constante atualização científica.</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                        <div class="feature-content">
+                            <h3>Segurança em Primeiro Lugar</h3>
+                            <p style="color: var(--gray);">Ambiente esterilizado, equipamentos modernos e protocolos rigorosos de biossegurança.</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon"><i class="fas fa-heart"></i></div>
+                        <div class="feature-content">
+                            <h3>Atendimento Personalizado</h3>
+                            <p style="color: var(--gray);">Cada animal é único, por isso oferecemos um plano de cuidados individualizado.</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon"><i class="fas fa-home"></i></div>
+                        <div class="feature-content">
+                            <h3>Ambiente Acolhedor</h3>
+                            <p style="color: var(--gray);">Clínica projetada para reduzir o estresse dos animais, com áreas separadas para cães e gatos.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Tecnologias -->
+        <section class="tech-section">
+            <div class="container">
+                <div class="text-center">
+                    <span class="section-subtitle" style="color: var(--secondary);">Tecnologia de ponta</span>
+                    <h2 class="section-title" style="color: var(--white);">Equipamentos Avançados</h2>
+                    <p style="margin-bottom: 50px; color: rgba(255,255,255,0.8); max-width: 700px; margin-left: auto; margin-right: auto;">Investimos nas mais modernas tecnologias para oferecer diagnósticos precisos e tratamentos eficazes.</p>
+                </div>
+                <div class="tech-grid">
+                    <div class="tech-card">
+                        <div class="service-icon" style="color: var(--secondary); font-size: 36px; margin-bottom: 20px;">
+                            <i class="fas fa-wave-square"></i>
+                        </div>
+                        <h3 class="tech-name">Ultrassom Veterinário</h3>
+                        <p class="tech-desc">Equipamento de ultrassonografia de alta resolução para diagnósticos precisos e não invasivos.</p>
+                    </div>
+                    <div class="tech-card">
+                        <div class="service-icon" style="color: var(--secondary); font-size: 36px; margin-bottom: 20px;">
+                            <i class="fas fa-x-ray"></i>
+                        </div>
+                        <h3 class="tech-name">Raio-X Digital</h3>
+                        <p class="tech-desc">Sistema de radiografia digital que oferece imagens de alta qualidade com baixa radiação.</p>
+                    </div>
+                    <div class="tech-card">
+                        <div class="service-icon" style="color: var(--secondary); font-size: 36px; margin-bottom: 20px;">
+                            <i class="fas fa-microscope"></i>
+                        </div>
+                        <h3 class="tech-name">Laboratório Próprio</h3>
+                        <p class="tech-desc">Análises clínicas rápidas e precisas com resultados em tempo reduzido.</p>
+                    </div>
+                    <div class="tech-card">
+                        <div class="service-icon" style="color: var(--secondary); font-size: 36px; margin-bottom: 20px;">
+                            <i class="fas fa-heartbeat"></i>
+                        </div>
+                        <h3 class="tech-name">Monitoramento Anestésico</h3>
+                        <p class="tech-desc">Sistema completo de monitoramento durante procedimentos cirúrgicos.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Casos de Sucesso -->
+        <section class="section-padding results-section">
+            <div class="container">
+                <div class="text-center">
+                    <span class="section-subtitle">Histórias de sucesso</span>
+                    <h2 class="section-title">Casos de Sucesso</h2>
+                    <p style="margin-bottom: 50px; color: var(--gray); max-width: 700px; margin-left: auto; margin-right: auto;">Animais que recuperaram a saúde e a alegria com nossos tratamentos.</p>
+                </div>
+                <div class="results-container">
+                    <div class="result-item">
+                        <img src="https://images.unsplash.com/photo-1554456854-55a089fd4cb2?q=80&w=2070&auto=format&fit=crop" alt="Cão em recuperação">
+                        <div class="result-overlay">
+                            <span class="result-type">Recuperação</span>
+                            <h3 class="result-title">Thor - Cirurgia Ortopédica</h3>
+                        </div>
+                    </div>
+                    <div class="result-item">
+                        <img src="https://images.unsplash.com/photo-1560743641-3914f2c45636?q=80&w=2069&auto=format&fit=crop" alt="Gato em tratamento">
+                        <div class="result-overlay">
+                            <span class="result-type">Tratamento</span>
+                            <h3 class="result-title">Luna - Tratamento Renal</h3>
+                        </div>
+                    </div>
+                    <div class="result-item">
+                        <img src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?q=80&w=1964&auto=format&fit=crop" alt="Cães felizes">
+                        <div class="result-overlay">
+                            <span class="result-type">Prevenção</span>
+                            <h3 class="result-title">Check-up Anual Completo</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. CTA Final -->
+        <section class="final-cta">
+            <div class="container">
+                <h2>Preocupado com a saúde do seu pet?</h2>
+                <p>Agende uma consulta de avaliação com nossos veterinários e garanta o melhor cuidado para seu amigo de quatro patas.</p>
+                <button class="btn btn-light" onclick="showPage('booking')">Agendar Consulta</button>
+            </div>
+        </section>
+    </div>
+
+    <!-- 2. SERVIÇOS DETALHADOS -->
+    <div id="services" class="page-section hidden fade-in">
+        <section class="section-padding services-detail-section">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <span class="section-subtitle">Cuidados completos</span>
+                    <h2 class="section-title">Nossos Serviços</h2>
+                    <p style="margin-bottom: 50px; color: var(--gray); max-width: 700px; margin-left: auto; margin-right: auto;">Oferecemos uma gama completa de serviços veterinários para cães e gatos.</p>
+                </div>
+
+                <!-- Serviços Clínicos -->
+                <div class="service-category">
+                    <h3 class="cat-title">Serviços Clínicos</h3>
+                    <div class="service-detail-grid">
+                        <div class="card service-detail-card">
+                            <h4 style="color: var(--primary); margin-bottom: 15px;">Consulta Veterinária</h4>
+                            <p style="color: var(--gray); margin-bottom: 15px;">Avaliação completa da saúde do seu pet, incluindo exame físico, orientações sobre alimentação e cuidados.</p>
+                            <ul style="color: var(--gray); margin-bottom: 20px; padding-left: 20px;">
+                                <li style="margin-bottom: 8px;">• Exame físico completo</li>
+                                <li style="margin-bottom: 8px;">• Orientação nutricional</li>
+                                <li style="margin-bottom: 8px;">• Plano de prevenção de doenças</li>
+                                <li style="margin-bottom: 8px;">• Encaminhamento para especialistas</li>
+                            </ul>
+                            <div class="service-price">R$ 120 - 180</div>
+                            <div class="price-note">*Valor varia conforme complexidade</div>
+                        </div>
+                        
+                        <div class="card service-detail-card">
+                            <h4 style="color: var(--primary); margin-bottom: 15px;">Vacinação</h4>
+                            <p style="color: var(--gray); margin-bottom: 15px;">Programa completo de imunização para proteger seu pet contra doenças infecciosas.</p>
+                            <ul style="color: var(--gray); margin-bottom: 20px; padding-left: 20px;">
+                                <li style="margin-bottom: 8px;">• V8/V10 (cinomose, hepatite, etc.)</li>
+                                <li style="margin-bottom: 8px;">• Antirrábica</li>
+                                <li style="margin-bottom: 8px;">• Gripe canina</li>
+                                <li style="margin-bottom: 8px;">• Giárdia e Leishmaniose</li>
+                            </ul>
+                            <div class="service-price">R$ 60 - 150</div>
+                            <div class="price-note">*Por dose, pacotes disponíveis</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Serviços Cirúrgicos -->
+                <div class="service-category">
+                    <h3 class="cat-title">Serviços Cirúrgicos</h3>
+                    <div class="service-detail-grid">
+                        <div class="card service-detail-card">
+                            <h4 style="color: var(--primary); margin-bottom: 15px;">Castração</h4>
+                            <p style="color: var(--gray); margin-bottom: 15px;">Procedimento cirúrgico para controle populacional e prevenção de doenças.</p>
+                            <ul style="color: var(--gray); margin-bottom: 20px; padding-left: 20px;">
+                                <li style="margin-bottom: 8px;">• Redução do risco de tumores</li>
+                                <li style="margin-bottom: 8px;">• Controle comportamental</li>
+                                <li style="margin-bottom: 8px;">• Monitoramento anestésico</li>
+                                <li style="margin-bottom: 8px;">• Inclui exames pré-operatórios</li>
+                            </ul>
+                            <div class="service-price">R$ 300 - 800</div>
+                            <div class="price-note">*Varia conforme porte e espécie</div>
+                        </div>
+                        
+                        <div class="card service-detail-card">
+                            <h4 style="color: var(--primary); margin-bottom: 15px;">Cirurgias Ortopédicas</h3>
+                            <p style="color: var(--gray); margin-bottom: 15px;">Correção de fraturas, luxações e outros problemas musculoesqueléticos.</p>
+                            <ul style="color: var(--gray); margin-bottom: 20px; padding-left: 20px;">
+                                <li style="margin-bottom: 8px;">• Correção de fraturas</li>
+                                <li style="margin-bottom: 8px;">• Tratamento de luxações</li>
+                                <li style="margin-bottom: 8px;">• Cirurgia de ligamento cruzado</li>
+                                <li style="margin-bottom: 8px;">• Displasia de quadril</li>
+                            </ul>
+                            <div class="service-price">R$ 800 - 3.500</div>
+                            <div class="price-note">*Valor depende da complexidade</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-5">
+                    <button class="btn btn-primary" onclick="showPage('booking')">Agendar Serviço</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- 3. SOBRE -->
+    <div id="about" class="page-section hidden fade-in">
+        <section class="about-hero">
+            <div class="container">
+                <h1 style="font-size: 48px; margin-bottom: 20px;">Paixão por Animais</h1>
+                <p style="font-size: 18px; max-width: 700px; margin-left: auto; margin-right: auto; opacity: 0.9;">Há mais de 15 anos cuidando da saúde e bem-estar dos seus melhores amigos.</p>
+            </div>
+        </section>
+
+        <section class="section-padding">
+            <div class="container">
+                <div style="max-width: 900px; margin: 0 auto;">
+                    <h2 class="section-title" style="text-align: center;">Nossa História</h2>
+                    <p style="color: var(--gray); margin-bottom: 30px; font-size: 17px; line-height: 1.7;">
+                        A VitaPet foi fundada em 2008 pelo Dr. Ricardo Silva, apaixonado por animais desde criança. 
+                        Começamos como um pequeno consultório e, através de muito trabalho, dedicação e amor pelos animais, 
+                        nos tornamos uma clínica veterinária de referência na região.
+                    </p>
+                    <p style="color: var(--gray); margin-bottom: 40px; font-size: 17px; line-height: 1.7;">
+                        Acreditamos que os animais são membros da família e merecem os melhores cuidados. 
+                        Por isso, investimos constantemente em equipamentos modernos, capacitação da equipe 
+                        e um ambiente acolhedor que reduz o estresse dos pets durante as consultas e tratamentos.
+                    </p>
+                    
+                    <div style="background: rgba(74, 140, 94, 0.05); padding: 40px; border-radius: 8px; margin-bottom: 50px; border-left: 4px solid var(--primary);">
+                        <h3 style="color: var(--primary); margin-bottom: 20px; font-size: 24px;">Nossa Missão</h3>
+                        <p style="color: var(--gray); font-size: 17px; line-height: 1.7;">
+                            <i>"Na VitaPet, nossa missão é proporcionar aos animais de estimação uma vida mais longa, 
+                            saudável e feliz. Trabalhamos com paixão, ética e conhecimento técnico para oferecer 
+                            os melhores cuidados veterinários, sempre com respeito e carinho por cada paciente."</i>
+                            <br><br>
+                            <strong>- Dr. Ricardo Silva, Fundador</strong>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-padding team-section">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <span class="section-subtitle">Conheça nossa equipe</span>
+                    <h2 class="section-title">Nossos Veterinários</h2>
+                </div>
+                
+                <div class="team-grid">
+                    <div class="card team-card">
+                        <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=2070&auto=format&fit=crop" class="team-img" alt="Dr. Ricardo">
+                        <h3 class="team-name">Dr. Ricardo Silva</h3>
+                        <div class="team-role">Veterinário Geral</div>
+                        <p style="color: var(--gray);">CRMV: SP-12345. Formado pela USP com especialização em clínica médica de pequenos animais.</p>
+                    </div>
+                    
+                    <div class="card team-card">
+                        <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=2070&auto=format&fit=crop" class="team-img" alt="Dra. Marina">
+                        <h3 class="team-name">Dra. Marina Oliveira</h3>
+                        <div class="team-role">Cirurgiã Veterinária</div>
+                        <p style="color: var(--gray);">CRMV: SP-23456. Especialista em cirurgias ortopédicas e de tecidos moles com formação internacional.</p>
+                    </div>
+                    
+                    <div class="card team-card">
+                        <img src="https://images.unsplash.com/photo-1591608971362-f08b2a75731a?q=80&w=2069&auto=format&fit=crop" class="team-img" alt="Dra. Camila">
+                        <h3 class="team-name">Dra. Camila Santos</h3>
+                        <div class="team-role">Dermatologista Veterinária</div>
+                        <p style="color: var(--gray);">CRMV: SP-34567. Expert em doenças de pele e alergias em cães e gatos.</p>
+                    </div>
+                    
+                    <div class="card team-card">
+                        <img src="https://images.unsplash.com/photo-1527613426441-4da17471b66d?q=80&w=2052&auto=format&fit=crop" class="team-img" alt="Juliana">
+                        <h3 class="team-name">Juliana Costa</h3>
+                        <div class="team-role">Assistente Veterinária</div>
+                        <p style="color: var(--gray);">Responsável pelos cuidados pós-operatórios, administração de medicamentos e atendimento aos tutores.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- 4. DEPOIMENTOS -->
+    <div id="testimonials" class="page-section hidden fade-in">
+        <section class="section-padding testimonials-section">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <span class="section-subtitle">O que dizem nossos clientes</span>
+                    <h2 class="section-title">Depoimentos</h2>
+                    <p style="margin-bottom: 50px; color: var(--gray); max-width: 700px; margin-left: auto; margin-right: auto;">A satisfação dos tutores e a saúde dos pets são nossa maior recompensa.</p>
+                </div>
+
+                <div class="testimonials-grid">
+                    <div class="testimonial-card">
+                        <div class="stars">★★★★★</div>
+                        <p class="testimonial-text">"Minha cachorrinha Luna fez uma cirurgia na VitaPet e o cuidado foi impecável! A equipe é super atenciosa e o Dr. Ricardo acompanhou todo o pós-operatório. Recomendo de olhos fechados!"</p>
+                        <div class="client-profile">
+                            <img src="https://randomuser.me/api/portraits/women/32.jpg" class="client-img" alt="Cliente">
+                            <div>
+                                <strong>Ana Paula</strong><br>
+                                <span style="font-size: 12px; color: #999;">Tutora há 5 anos</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-card">
+                        <div class="stars">★★★★★</div>
+                        <p class="testimonial-text">"Meu gato Thor teve um problema renal grave e a Dra. Camila salvou a vida dele. O tratamento foi caro, mas valeu cada centavo. Hoje ele está saudável e feliz!"</p>
+                        <div class="client-profile">
+                            <img src="https://randomuser.me/api/portraits/men/44.jpg" class="client-img" alt="Cliente">
+                            <div>
+                                <strong>Carlos Mendes</strong><br>
+                                <span style="font-size: 12px; color: #999;">Tutor há 3 anos</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-card">
+                        <div class="stars">★★★★★</div>
+                        <p class="testimonial-text">"Levo meus dois dogs na VitaPet há anos. A equipe é maravilhosa, o ambiente é limpo e organizado, e os preços são justos. Meus pets são tratados com muito carinho!"</p>
+                        <div class="client-profile">
+                            <img src="https://randomuser.me/api/portraits/women/68.jpg" class="client-img" alt="Cliente">
+                            <div>
+                                <strong>Fernanda Costa</strong><br>
+                                <span style="font-size: 12px; color: #999;">Tutora há 6 anos</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- 5. AGENDAMENTO -->
+    <div id="booking" class="page-section hidden fade-in">
+        <section class="section-padding booking-section">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <span class="section-subtitle">Agende sua consulta</span>
+                    <h2 class="section-title">Agendamento Online</h2>
+                    <p style="margin-bottom: 50px; color: var(--gray); max-width: 700px; margin-left: auto; margin-right: auto;">Escolha o melhor horário para trazer seu pet para uma consulta ou procedimento.</p>
+                </div>
+
+                <div class="booking-container">
+                    <!-- Calendário -->
+                    <div class="calendar-widget">
+                        <h3 style="color: var(--primary); margin-bottom: 20px;">Escolha a Data</h3>
+                        <div class="calendar-header">
+                            <button onclick="changeMonth(-1)" style="background: none; border: none; color: var(--primary); cursor: pointer; font-size: 18px;">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <h4 id="currentMonth" style="color: var(--primary);">Junho 2024</h4>
+                            <button onclick="changeMonth(1)" style="background: none; border: none; color: var(--primary); cursor: pointer; font-size: 18px;">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                        <div class="calendar-grid" id="calendarDays">
+                            <!-- Dias serão gerados por JavaScript -->
+                        </div>
+                        
+                        <h3 style="color: var(--primary); margin-top: 30px; margin-bottom: 15px;">Horários Disponíveis</h3>
+                        <div class="time-slots" id="timeSlots">
+                            <!-- Horários serão gerados por JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Formulário de Agendamento -->
+                    <div class="booking-form-wrapper">
+                        <h3 style="color: var(--primary); margin-bottom: 25px; font-size: 24px;">Dados do Agendamento</h3>
+                        <form onsubmit="event.preventDefault(); confirmBooking();">
+                            <div class="form-group">
+                                <label>Nome do Tutor*</label>
+                                <input type="text" class="form-control" placeholder="Seu nome" required id="clientName">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Telefone*</label>
+                                <input type="tel" class="form-control" placeholder="(11) 99999-9999" required id="clientPhone">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Nome do Pet*</label>
+                                <input type="text" class="form-control" placeholder="Nome do seu animal" required id="petName">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Espécie*</label>
+                                <select class="form-control" id="petSpecies" required>
+                                    <option>Cachorro</option>
+                                    <option>Gato</option>
+                                    <option>Outro</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Veterinário Preferido</label>
+                                <select class="form-control" id="vetSelect">
+                                    <option>Qualquer veterinário disponível</option>
+                                    <option>Dr. Ricardo Silva</option>
+                                    <option>Dra. Marina Oliveira</option>
+                                    <option>Dra. Camila Santos</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Motivo da Consulta*</label>
+                                <select class="form-control" id="consultType" required>
+                                    <option>Consulta de Rotina</option>
+                                    <option>Vacinação</option>
+                                    <option>Castração</option>
+                                    <option>Problema de Pele</option>
+                                    <option>Cirurgia</option>
+                                    <option>Exames</option>
+                                    <option>Outro</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Data e Horário Selecionados</label>
+                                <input type="text" class="form-control" id="selectedDateTime" readonly>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Observações (Opcional)</label>
+                                <textarea rows="3" class="form-control" placeholder="Informações sobre o estado do seu pet..." id="bookingNotes"></textarea>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary" style="width: 100%;">Confirmar Agendamento</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- 6. CONTATO -->
+    <div id="contact" class="page-section hidden fade-in">
+        <section class="section-padding">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <span class="section-subtitle">Entre em contato</span>
+                    <h2 class="section-title">Fale Conosco</h2>
+                    <p style="margin-bottom: 50px; color: var(--gray); max-width: 700px; margin-left: auto; margin-right: auto;">Estamos prontos para tirar suas dúvidas e ajudar no cuidado do seu pet.</p>
+                </div>
+
+                <div class="contact-layout">
+                    <!-- Informações -->
+                    <div class="contact-info">
+                        <div class="info-box">
+                            <div class="info-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>
+                                <div class="info-label">Endereço</div>
+                                <div class="info-content">
+                                    Av. dos Animais, 123 - Jardim Pet<br>
+                                    São Paulo - SP, CEP: 04534-000
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="info-box">
+                            <div class="info-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div>
+                                <div class="info-label">Telefone & WhatsApp</div>
+                                <div class="info-content">
+                                    (11) 3333-4444<br>
+                                    (11) 99999-5555 (WhatsApp)
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="info-box">
+                            <div class="info-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div>
+                                <div class="info-label">Horário de Funcionamento</div>
+                                <div class="info-content">
+                                    Segunda a Sexta: 08h às 20h<br>
+                                    Sábado: 08h às 16h<br>
+                                    Domingo: 09h às 13h (apenas emergências)
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="info-box">
+                            <div class="info-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <div class="info-label">E-mail</div>
+                                <div class="info-content">
+                                    contato@vitapet.com.br<br>
+                                    emergencia@vitapet.com.br
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Mapa Estático -->
+                        <div style="background: var(--gray-light); height: 200px; border-radius: 5px; display: flex; align-items: center; justify-content: center; color: var(--gray); margin-top: 30px;">
+                            <div style="text-align: center;">
+                                <i class="fas fa-map" style="font-size: 40px; margin-bottom: 10px; color: var(--primary);"></i><br>
+                                <strong>Localização no Mapa</strong><br>
+                                <small>Av. dos Animais, 123 - São Paulo/SP</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Formulário -->
+                    <div class="contact-form-wrapper">
+                        <div class="card" style="padding: 40px;">
+                            <h3 style="color: var(--primary); margin-bottom: 25px; font-size: 24px;">Envie sua Mensagem</h3>
+                            <form onsubmit="event.preventDefault(); alert('Mensagem enviada com sucesso! Entraremos em contato em até 24 horas.');">
+                                <div class="form-group">
+                                    <label>Nome Completo*</label>
+                                    <input type="text" class="form-control" placeholder="Seu nome" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Telefone*</label>
+                                    <input type="tel" class="form-control" placeholder="(11) 99999-9999" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>E-mail*</label>
+                                    <input type="email" class="form-control" placeholder="seu@email.com" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Assunto</label>
+                                    <select class="form-control">
+                                        <option>Dúvidas sobre serviços</option>
+                                        <option>Agendamento</option>
+                                        <option>Orçamento</option>
+                                        <option>Emergência</option>
+                                        <option>Outros</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Mensagem*</label>
+                                    <textarea rows="4" class="form-control" placeholder="Como podemos ajudar você e seu pet?" required></textarea>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary" style="width: 100%;">Enviar Mensagem</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <div class="footer-logo">VITA<span>PET</span></div>
+                    <p class="footer-about">Clínica veterinária especializada em cuidados para cães e gatos. Excelência, segurança e muito amor desde 2008.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-tiktok"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="footer-title">Navegação</h3>
+                    <div class="footer-nav">
+                        <a onclick="showPage('home')">Home</a>
+                        <a onclick="showPage('services')">Serviços</a>
+                        <a onclick="showPage('about')">Sobre</a>
+                        <a onclick="showPage('testimonials')">Depoimentos</a>
+                        <a onclick="showPage('booking')">Agendamento</a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="footer-title">Serviços</h3>
+                    <div class="footer-nav">
+                        <a href="#">Consultas Veterinárias</a>
+                        <a href="#">Vacinação</a>
+                        <a href="#">Castração</a>
+                        <a href="#">Cirurgias</a>
+                        <a href="#">Exames Laboratoriais</a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="footer-title">Dicas Veterinárias</h3>
+                    <p class="footer-about">Receba em seu e-mail dicas de cuidados, alimentação e saúde para seu pet.</p>
+                    <div style="margin-top: 20px;">
+                        <input type="email" placeholder="Seu e-mail" style="width: 100%; padding: 12px; border-radius: 4px; border: none; margin-bottom: 10px;">
+                        <button class="btn btn-primary" style="width: 100%; padding: 12px; background: var(--primary);">Inscrever-se</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2024 VitaPet Clínica Veterinária. Todos os direitos reservados. | Desenvolvido com ❤️ para quem ama animais
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT (LÓGICA SPA + AGENDAMENTO) -->
+    <script>
+        // Variáveis para o sistema de agendamento
+        let currentDate = new Date();
+        let selectedDate = null;
+        let selectedTime = null;
+        const workingHours = ['08:00', '09:00', '10:00', '11:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00'];
+        
+        function showPage(pageId) {
+            // 1. Esconder todas as seções
+            const sections = document.querySelectorAll('.page-section');
+            sections.forEach(section => {
+                section.classList.add('hidden');
+            });
+
+            // 2. Mostrar a seção desejada
+            const activeSection = document.getElementById(pageId);
+            if (activeSection) {
+                activeSection.classList.remove('hidden');
+                // Scroll para o topo suavemente
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                
+                // Se for a página de agendamento, inicializar o calendário
+                if (pageId === 'booking') {
+                    setTimeout(() => {
+                        updateCalendar();
+                        updateTimeSlots();
+                    }, 100);
+                }
+            }
+
+            // 3. Atualizar o link ativo no menu
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                // Verifica se o onclick desse link aponta para a pagina atual
+                if (link.getAttribute('onclick').includes(pageId)) {
+                    link.classList.add('active');
+                }
+            });
+
+            // 4. Fechar menu mobile se estiver aberto
+            const navbar = document.getElementById('navbar');
+            navbar.classList.remove('mobile-active');
+        }
+
+        function toggleMobileMenu() {
+            const navbar = document.getElementById('navbar');
+            navbar.classList.toggle('mobile-active');
+        }
+
+        // Funções para o sistema de agendamento
+        function updateCalendar() {
+            const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+                "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+            
+            // Atualizar título do mês
+            document.getElementById('currentMonth').textContent = 
+                `${monthNames[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
+            
+            // Gerar dias do calendário
+            const calendarDays = document.getElementById('calendarDays');
+            calendarDays.innerHTML = '';
+            
+            // Adicionar cabeçalho dos dias da semana
+            const daysOfWeek = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+            daysOfWeek.forEach(day => {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'calendar-day';
+                dayElement.style.fontWeight = '600';
+                dayElement.textContent = day;
+                calendarDays.appendChild(dayElement);
+            });
+            
+            // Primeiro dia do mês
+            const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+            // Último dia do mês
+            const lastDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+            
+            // Dias em branco antes do primeiro dia
+            for (let i = 0; i < firstDay.getDay(); i++) {
+                const emptyDay = document.createElement('div');
+                emptyDay.className = 'calendar-day';
+                emptyDay.style.visibility = 'hidden';
+                calendarDays.appendChild(emptyDay);
+            }
+            
+            // Dias do mês
+            for (let day = 1; day <= lastDay.getDate(); day++) {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'calendar-day';
+                dayElement.textContent = day;
+                
+                // Verificar se é hoje
+                const today = new Date();
+                if (currentDate.getMonth() === today.getMonth() && 
+                    currentDate.getFullYear() === today.getFullYear() && 
+                    day === today.getDate()) {
+                    dayElement.style.fontWeight = '700';
+                    dayElement.style.color = 'var(--primary)';
+                }
+                
+                // Verificar se é o dia selecionado
+                if (selectedDate && 
+                    currentDate.getMonth() === selectedDate.getMonth() && 
+                    currentDate.getFullYear() === selectedDate.getFullYear() && 
+                    day === selectedDate.getDate()) {
+                    dayElement.classList.add('selected');
+                }
+                
+                // Adicionar evento de clique
+                dayElement.addEventListener('click', () => {
+                    selectDay(day);
+                });
+                
+                calendarDays.appendChild(dayElement);
+            }
+        }
+        
+        function selectDay(day) {
+            selectedDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
+            
+            // Remover seleção anterior
+            const allDays = document.querySelectorAll('.calendar-day');
+            allDays.forEach(dayElement => {
+                dayElement.classList.remove('selected');
+            });
+            
+            // Adicionar seleção atual
+            const selectedDayElement = Array.from(allDays).find(element => 
+                element.textContent === day.toString() && !element.style.fontWeight);
+            if (selectedDayElement) {
+                selectedDayElement.classList.add('selected');
+            }
+            
+            // Atualizar horários disponíveis
+            updateTimeSlots();
+            
+            // Atualizar campo de data/hora
+            updateSelectedDateTime();
+        }
+        
+        function changeMonth(direction) {
+            currentDate.setMonth(currentDate.getMonth() + direction);
+            selectedDate = null;
+            selectedTime = null;
+            updateCalendar();
+            updateTimeSlots();
+            updateSelectedDateTime();
+        }
+        
+        function updateTimeSlots() {
+            const timeSlotsContainer = document.getElementById('timeSlots');
+            timeSlotsContainer.innerHTML = '';
+            
+            if (!selectedDate) {
+                const message = document.createElement('div');
+                message.textContent = 'Selecione uma data primeiro';
+                message.style.gridColumn = '1 / -1';
+                message.style.textAlign = 'center';
+                message.style.color = 'var(--gray)';
+                timeSlotsContainer.appendChild(message);
+                return;
+            }
+            
+            // Gerar horários disponíveis
+            workingHours.forEach(time => {
+                const timeSlot = document.createElement('div');
+                timeSlot.className = 'time-slot';
+                timeSlot.textContent = time;
+                
+                // Verificar se é o horário selecionado
+                if (selectedTime === time) {
+                    timeSlot.classList.add('selected');
+                }
+                
+                // Adicionar evento de clique
+                timeSlot.addEventListener('click', () => {
+                    selectTime(time);
+                });
+                
+                timeSlotsContainer.appendChild(timeSlot);
+            });
+        }
+        
+        function selectTime(time) {
+            selectedTime = time;
+            
+            // Remover seleção anterior
+            const allTimeSlots = document.querySelectorAll('.time-slot');
+            allTimeSlots.forEach(slot => {
+                slot.classList.remove('selected');
+            });
+            
+            // Adicionar seleção atual
+            const selectedSlot = Array.from(allTimeSlots).find(slot => slot.textContent === time);
+            if (selectedSlot) {
+                selectedSlot.classList.add('selected');
+            }
+            
+            // Atualizar campo de data/hora
+            updateSelectedDateTime();
+        }
+        
+        function updateSelectedDateTime() {
+            const dateTimeField = document.getElementById('selectedDateTime');
+            
+            if (selectedDate && selectedTime) {
+                const day = selectedDate.getDate().toString().padStart(2, '0');
+                const month = (selectedDate.getMonth() + 1).toString().padStart(2, '0');
+                const year = selectedDate.getFullYear();
+                
+                dateTimeField.value = `${day}/${month}/${year} às ${selectedTime}`;
+            } else if (selectedDate) {
+                const day = selectedDate.getDate().toString().padStart(2, '0');
+                const month = (selectedDate.getMonth() + 1).toString().padStart(2, '0');
+                const year = selectedDate.getFullYear();
+                
+                dateTimeField.value = `${day}/${month}/${year} - Selecione um horário`;
+            } else {
+                dateTimeField.value = 'Selecione uma data e horário';
+            }
+        }
+        
+        function confirmBooking() {
+            if (!selectedDate || !selectedTime) {
+                alert('Por favor, selecione uma data e horário antes de confirmar.');
+                return;
+            }
+            
+            const clientName = document.getElementById('clientName').value;
+            const clientPhone = document.getElementById('clientPhone').value;
+            const petName = document.getElementById('petName').value;
+            const petSpecies = document.getElementById('petSpecies').value;
+            const consultType = document.getElementById('consultType').value;
+            const vet = document.getElementById('vetSelect').value;
+            
+            const day = selectedDate.getDate().toString().padStart(2, '0');
+            const month = (selectedDate.getMonth() + 1).toString().padStart(2, '0');
+            const year = selectedDate.getFullYear();
+            
+            const confirmationMessage = `
+                ✅ Consulta Agendada!
+                
+                📅 Data: ${day}/${month}/${year}
+                ⏰ Horário: ${selectedTime}
+                👤 Tutor: ${clientName}
+                📞 Telefone: ${clientPhone}
+                🐾 Pet: ${petName} (${petSpecies})
+                🩺 Motivo: ${consultType}
+                👩‍⚕️ Veterinário: ${vet}
+                
+                Obrigado por agendar conosco!
+                Enviamos os detalhes para seu e-mail.
+                Chegue 10 minutos antes do horário marcado.
+                Não esqueça de trazer a carteirinha de vacinação!
+            `;
+            
+            alert(confirmationMessage);
+            
+            // Resetar formulário
+            document.querySelector('form').reset();
+            selectedDate = null;
+            selectedTime = null;
+            updateCalendar();
+            updateTimeSlots();
+            updateSelectedDateTime();
+        }
+
+        // Inicializar na Home
+        document.addEventListener('DOMContentLoaded', () => {
+            showPage('home');
+        });
+    </script>
+</body>
+</html>
